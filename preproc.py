@@ -26,7 +26,7 @@ def get_idf(word,Books):
         if word in book.norm_text :
             count = count + 1
 
-    return math.log(total/count)
+    return 1+math.log(total/count)
 
 class Node:
 
