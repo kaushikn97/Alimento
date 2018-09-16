@@ -31,6 +31,12 @@ class Book:
     def set_index(self,index):
         self.index = index
 
+    def get_index(self):
+        return self.index
+
+    def set_norm_text(self,norm_text):
+        self.norm_text = norm_text
+
     def write_to_csv_link(self,csv_name):
         with open(csv_name, 'a') as csvFile:
             writer = csv.writer(csvFile)
@@ -51,4 +57,19 @@ class Book:
             row.append(self.characters)
             row.append(self.awards)
             row.append(self.all_text)
+            writer.writerow(row)
+    def write_to_csv_norm(self,csv_name):
+        with open(csv_name, 'a') as csvFile:
+            writer = csv.writer(csvFile)
+            row = []
+            row.append(self.index)
+            row.append(self.title)
+            row.append(self.author)
+            row.append(self.desc)
+            row.append(self.rating)
+            row.append(self.genre)
+            row.append(self.characters)
+            row.append(self.awards)
+            row.append(self.all_text)
+            row.append(self.norm_text)
             writer.writerow(row)
