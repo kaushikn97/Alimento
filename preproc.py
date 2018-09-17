@@ -94,6 +94,8 @@ class TrieNode(object):
         self.word_finished = False
         # How many times this character appeared in the addition process
         self.counter = 1
+        #word index
+        self.word_index = -1
         #Link to inverted index
         self.postings_list = PostingsList()
 
@@ -127,14 +129,14 @@ def insert(root, book_id, score, word: str):
 
     node.word_finished = True
 
-def traverse(root,dictionary):
+def traverse(root,dictionary,curr_word):
 
     node = root
     if node.word_finished == True :
-        dictionary.append(node.postings_list)
+        dictionary.append((curr_word,node.postings_list))
 
     for child in node.children:
-        traverse(child,dictionary)
+        traverse(child,dictionary,curr_word + child.char)
 
 def find_prefix(root, prefix: str) -> Tuple[bool, int]:
     """
@@ -242,8 +244,12 @@ if __name__ == "__main__":
                 insert(normal_root,book.index,get_tf(word,stemmed)*get_idf(word,Books),word)
                 words_added.append(word)
 
-    traverse(normal_root,dictionary)
+    traverse(normal_root,dictionary,'')
     sys.setrecursionlimit(10000)
+
+    pickle_out = open(os.getcwd() + "/book_with_norm.pickle","wb")
+    pickle.dump(Books, pickle_out)
+    pickle_out.close()
 
     pickle_out = open(os.getcwd() + "/trie_with_vectors.pickle","wb")
     pickle.dump(normal_root, pickle_out)

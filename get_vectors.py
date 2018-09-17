@@ -21,7 +21,7 @@ if __name__ == "__main__":
         vectors.append([])
         print(book.index)
         vector_mag = 0
-        for postings_list in dictionary:
+        for (word,postings_list) in dictionary:
 
             score = postings_list.find_book_score(book.index)
             vectors[int(book.get_index())].append(score)
