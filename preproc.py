@@ -99,6 +99,36 @@ class TrieNode(object):
         #Link to inverted index
         self.postings_list = PostingsList()
 
+def search_prefix(root,prefix):
+    empty_list = []
+    not_done = True
+    index = 0
+    while(not_done):
+        if index == len(prefix):
+            not_done = False
+            word_list = []
+            find_all_words(root,"",word_list)
+            return word_list
+
+        found = 0
+
+        for child in root.children:
+            if child.char == prefix[index]:
+                root = child
+                index += 1
+                found = 1
+
+        if found == 0:
+            return empty_list
+
+def find_all_words(root,curr_word,word_list):
+    node = root
+    if node.word_finished == True :
+        word_list.append(curr_word)
+
+    for child in node.children:
+        find_all_words(child,curr_word + child.char,word_list)
+
 def insert(root, book_id, score, word: str):
     """
     Adding a word in the trie structure
@@ -129,14 +159,14 @@ def insert(root, book_id, score, word: str):
 
     node.word_finished = True
 
-def traverse(root,dictionary,curr_word):
+def traverse(root,dictionary,curr_word,Books):
 
     node = root
     if node.word_finished == True :
-        dictionary.append((curr_word,node.postings_list))
+        dictionary.append((curr_word,node.postings_list,get_idf(curr_word,Books)))
 
     for child in node.children:
-        traverse(child,dictionary,curr_word + child.char)
+        traverse(child,dictionary,curr_word + child.char,Books)
 
 def find_prefix(root, prefix: str) -> Tuple[bool, int]:
     """
@@ -244,7 +274,7 @@ if __name__ == "__main__":
                 insert(normal_root,book.index,get_tf(word,stemmed)*get_idf(word,Books),word)
                 words_added.append(word)
 
-    traverse(normal_root,dictionary,'')
+    traverse(normal_root,dictionary,'',Books)
     sys.setrecursionlimit(10000)
 
     pickle_out = open(os.getcwd() + "/book_with_norm.pickle","wb")

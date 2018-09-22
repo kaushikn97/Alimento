@@ -70,10 +70,10 @@ if __name__ == '__main__':
     words_added=[]
     result = []
     magnitude = 0
-    for (word,postings_list) in dictionary:
+    for (word,postings_list,idf) in dictionary:
         if word in stemmed:
             if word not in words_added:
-                score=get_tf(word,stemmed)*get_newidf(word,Books)
+                score=get_tf(word,stemmed)*idf
                 query_vector.append(score)
                 words_added.append(word)
                 magnitude = magnitude + score*score
@@ -102,6 +102,7 @@ if __name__ == '__main__':
 
         for i in range(0,11):
             result.append(Books[cosine_dist[i][0]])
-            print(Books[cosine_dist[i][0]].title)
+            #print(Books[cosine_dist[i][0]].title)
+        return result
     else:
         print ("No results found")
