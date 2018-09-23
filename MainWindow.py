@@ -3,7 +3,6 @@ import PyQt5
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-#import SearchWindow
 import autocomplete
 import os
 import pickle
@@ -221,10 +220,12 @@ class Main_Window(QMainWindow):
     @pyqtSlot()
     def setting_index(self):
         selected_text=self.searchbox.currentText()
-        #print(selected_text)
+        print(selected_text)
+        print('1111111111')
         #index=self.searchbox.findText(selected_text,PyQt5.QtCore.Qt.MatchFixedString)
         #print(index)
         self.searchbox.lineEdit().setText(selected_text)
+        self.currenttext=selected_text
 
         print(self.searchbox.currentText())
         print('askdfalkdsjhfajdshfljakfhlkajhfljadhslfjkahaldsjkfhaldjfhlad')
@@ -266,16 +267,18 @@ class Main_Window(QMainWindow):
 
     @pyqtSlot()
     def auto_complete_functionality(self):
+        #if self.currenttext!="":
+        print(self.searchbox.lineEdit().text())
+        self.currenttext=self.searchbox.lineEdit().text()
         print('im running')
-
         n=self.searchbox.count()
         #setting the combobox as null
-        for i in range(n):
+        for i in range(n-1):
             self.searchbox.removeItem(1)
-
+        self.searchbox.lineEdit().setText(self.currenttext)    
         words=[]
         #the query entered so far is stored here
-        searchboxValue=self.searchbox.currentText()
+        searchboxValue=self.searchbox.lineEdit().text()
         print(searchboxValue)
         words=searchboxValue.split(' ')
         #will pass words[-1] to kaushik and he will return a list of words "listed"
