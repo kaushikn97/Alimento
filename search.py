@@ -30,9 +30,8 @@ def get_tf(word,terms):
 
     return count/total
 
-if __name__ == '__main__':
+def search_query(text):
 
-    text = input('Enter search query: ')
     # split into words
     from nltk.tokenize import word_tokenize
     tokens = word_tokenize(text)

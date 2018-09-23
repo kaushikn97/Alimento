@@ -213,6 +213,7 @@ if __name__ == "__main__":
 
     normal_root = TrieNode('*')
     whole_root = TrieNode('*')
+    whole_words_added = []
 
     for row in rows:
         oneBook = Book()
@@ -248,9 +249,9 @@ if __name__ == "__main__":
         # remove all tokens that are not alphabetic
         words = [word for word in words_unfil if word.isalpha()]
 
-        whole_words_added = []
         for word in words:
             if word not in whole_words_added:
+                print(word)
                 insert(whole_root,oneBook.index,-1,word)
                 whole_words_added.append(word)
 
