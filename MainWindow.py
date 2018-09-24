@@ -16,7 +16,7 @@ class Main_Window(QMainWindow):
         self.title = 'Libro'
         self.left = 10
         self.top = 10
-        self.width = 640
+        self.width = 1060
         self.height = 640
         self.initUI()
 
@@ -24,10 +24,10 @@ class Main_Window(QMainWindow):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.currenttext=""
-        #self.window= QtWidget();
+        
         #create search_box
         self.searchbox=QComboBox(self)
-        self.searchbox.move(150,90)
+        self.searchbox.move(350,90)
         self.searchbox.resize(280,40)
         self.searchbox.setEditable(True)
         self.searchbox.lineEdit().textEdited.connect(self. auto_complete_functionality)
@@ -36,179 +36,139 @@ class Main_Window(QMainWindow):
 
         #create a button
         self.searchbutton=QPushButton('Search',self)
-        self.searchbutton.move(450,95)
+        self.searchbutton.move(650,95)
+        
         #connect button to on_click
         self.searchbutton.clicked.connect(self.on_click)
+        
         #adding searchbox and search button in a horizontal layout
         search_layout=QHBoxLayout();
         search_layout.addWidget(self.searchbox)
         search_layout.addWidget(self.searchbutton)
+        
         #adding search_layout to a vertical layout
         total_result_layout=QVBoxLayout()
+        
         #defining the label to display the book names
-        self.rlabel1=QLabel(self)
-        self.rlabel2=QLabel(self)
-        self.rlabel3=QLabel(self)
-        self.rlabel4=QLabel(self)
-        self.rlabel5=QLabel(self)
-        self.rlabel6=QLabel(self)
-        self.rlabel7=QLabel(self)
-        self.rlabel8=QLabel(self)
-        self.rlabel9=QLabel(self)
-        self.rlabel10=QLabel(self)
-        #a label if the query entered is not correct
+        self.rlabel=[]
+        for i in range(1,10):
+            self.rlabel.append(QLabel(self))
+        
+        #label if the query entered is not correct
         self.incorrect_query=QLabel(self)
         self.incorrect_query.setText('No Results Found. Try again.')
         self.incorrect_query.move(80,150)
         self.incorrect_query.resize(250,30)
+        
         #aligning the text to left for all the labels
-        self.rlabel1.setAlignment(Qt.AlignLeft)
-        self.rlabel2.setAlignment(Qt.AlignLeft)
-        self.rlabel3.setAlignment(Qt.AlignLeft)
-        self.rlabel4.setAlignment(Qt.AlignLeft)
-        self.rlabel5.setAlignment(Qt.AlignLeft)
-        self.rlabel6.setAlignment(Qt.AlignLeft)
-        self.rlabel7.setAlignment(Qt.AlignLeft)
-        self.rlabel8.setAlignment(Qt.AlignLeft)
-        self.rlabel9.setAlignment(Qt.AlignLeft)
-        self.rlabel10.setAlignment(Qt.AlignLeft)
+        for i in range(0,9):
+            self.rlabel[i].setAlignment(Qt.AlignLeft)
+        
         #positioning the labels
-        self.rlabel1.move(80,180)
-        self.rlabel2.move(80,220)
-        self.rlabel3.move(80,260)
-        self.rlabel4.move(80,300)
-        self.rlabel5.move(80,340)
-        self.rlabel6.move(80,380)
-        self.rlabel7.move(80,420)
-        self.rlabel8.move(80,460)
-        self.rlabel9.move(80,500)
-        self.rlabel10.move(80,540)
+        for i in range(0,9):
+            self.rlabel[i].move(80,180+ 40*i)
+        
         #resizing the label
-        self.rlabel1.resize(380,30)
-        self.rlabel2.resize(380,30)
-        self.rlabel3.resize(380,30)
-        self.rlabel4.resize(380,30)
-        self.rlabel5.resize(380,30)
-        self.rlabel6.resize(380,30)
-        self.rlabel7.resize(380,30)
-        self.rlabel8.resize(380,30)
-        self.rlabel9.resize(380,30)
-        self.rlabel10.resize(380,30)
+        for i in range(0,9):
+            self.rlabel[i].resize(380,30)
+        
         #setting some initial text for the labels
-        self.rlabel1.setText('1')
-        self.rlabel2.setText('2')
-        self.rlabel3.setText('3')
-        self.rlabel4.setText('4')
-        self.rlabel5.setText('5')
-        self.rlabel6.setText('6')
-        self.rlabel7.setText('7')
-        self.rlabel8.setText('8')
-        self.rlabel9.setText('9')
-        self.rlabel10.setText('10')
+        for i in range(0,9):
+            self.rlabel[i].setText('0')
+        
         #defining all the view buttons for the 10 search results
-        self.rbutton1=QPushButton('View',self)
-        self.rbutton2=QPushButton('View',self)
-        self.rbutton3=QPushButton('View',self)
-        self.rbutton4=QPushButton('View',self)
-        self.rbutton5=QPushButton('View',self)
-        self.rbutton6=QPushButton('View',self)
-        self.rbutton7=QPushButton('View',self)
-        self.rbutton8=QPushButton('View',self)
-        self.rbutton9=QPushButton('View',self)
-        self.rbutton10=QPushButton('View',self)
+        self.rbutton=[]
+        for i in range(1,10):
+            self.rbutton.append(QPushButton('View',self))    
+        
         #setting the buttons position
-        self.rbutton1.move(450,170)
-        self.rbutton2.move(450,210)
-        self.rbutton3.move(450,250)
-        self.rbutton4.move(450,290)
-        self.rbutton5.move(450,330)
-        self.rbutton6.move(450,370)
-        self.rbutton7.move(450,410)
-        self.rbutton8.move(450,450)
-        self.rbutton9.move(450,490)
-        self.rbutton10.move(450,530)
+        for i in range(0,9):
+            self.rbutton[i].move(1050, 170 +40*i) 
+        
         #setting the size of the buttons
-        self.rbutton1.resize(100,30)
-        self.rbutton2.resize(100,30)
-        self.rbutton3.resize(100,30)
-        self.rbutton4.resize(100,30)
-        self.rbutton5.resize(100,30)
-        self.rbutton6.resize(100,30)
-        self.rbutton7.resize(100,30)
-        self.rbutton8.resize(100,30)
-        self.rbutton9.resize(100,30)
-        self.rbutton10.resize(100,30)
+        for i in range(0,9):
+            self.rbutton[i].resize(100,30)
+
+        #defining author label
+        self.author_label=[]
+        for i in range(0,9):
+            self.author_label.append(QLabel(self))
+        
+        #setting the position of the author label
+        for i in range(0,9):
+            self.author_label[i].move(450,180 +40*i)
+
+        #resize the author label
+        for i in range(0,9):
+            self.author_label[i].resize(200,30)
+        
+        #defining rating label
+        self.rating_label=[]
+        for i in range(0,9):
+            self.rating_label.append(QLabel(self))
+        
+        #setting the position of the rating label
+        for i in range(0,9):
+            self.rating_label[i].move(650,180 +40*i)
+
+        #resize the rating label
+        for i in range(0,9):
+            self.rating_label[i].resize(200,30)
+
+        #defining genre label
+        self.genre_label=[]
+        for i in range(0,9):
+            self.genre_label.append(QLabel(self))
+        
+        #setting the position of the author label
+        for i in range(0,9):
+            self.genre_label[i].move(850,180 +40*i)
+
+        #resize the author label
+        for i in range(0,9):
+            self.genre_label[i].resize(200,30)
+
         #layout for incorrect query
         incorrect_query_layout=QHBoxLayout()
         incorrect_query_layout.addWidget(self.incorrect_query)
+        
         #defining 10 horizontal layouts
-        result_layout1=QHBoxLayout()
-        result_layout2=QHBoxLayout()
-        result_layout3=QHBoxLayout()
-        result_layout4=QHBoxLayout()
-        result_layout5=QHBoxLayout()
-        result_layout6=QHBoxLayout()
-        result_layout7=QHBoxLayout()
-        result_layout8=QHBoxLayout()
-        result_layout9=QHBoxLayout()
-        result_layout10=QHBoxLayout()
+        result_layout=[]
+        for i in range(1,10):
+            result_layout.append(QHBoxLayout())
+        
         #adding the labels  to the layout
-        result_layout1.addWidget(self.rlabel1)
-        result_layout2.addWidget(self.rlabel2)
-        result_layout3.addWidget(self.rlabel3)
-        result_layout4.addWidget(self.rlabel4)
-        result_layout5.addWidget(self.rlabel5)
-        result_layout6.addWidget(self.rlabel6)
-        result_layout7.addWidget(self.rlabel7)
-        result_layout8.addWidget(self.rlabel8)
-        result_layout9.addWidget(self.rlabel9)
-        result_layout10.addWidget(self.rlabel10)
+        for i in range(0,9):
+            result_layout[i].addWidget(self.rlabel[i])
+        for i in range(0,9):
+            result_layout[i].addWidget(self.author_label[i])
+        for i in range(0,9):
+            result_layout[i].addWidget(self.rating_label[i])
+        for i in range(0,9):
+            result_layout[i].addWidget(self.genre_label[i])    
         #adding the buttons to the layout
-        result_layout1.addWidget(self.rbutton1)
-        result_layout2.addWidget(self.rbutton2)
-        result_layout3.addWidget(self.rbutton3)
-        result_layout4.addWidget(self.rbutton4)
-        result_layout5.addWidget(self.rbutton5)
-        result_layout6.addWidget(self.rbutton6)
-        result_layout7.addWidget(self.rbutton7)
-        result_layout8.addWidget(self.rbutton8)
-        result_layout9.addWidget(self.rbutton9)
-        result_layout10.addWidget(self.rbutton10)
+        for i in range(0,9):
+            result_layout[i].addWidget(self.rbutton[i])
+
         #adding all the horizontal layout to a vertical layout
         total_result_layout.addLayout(incorrect_query_layout)
-        total_result_layout.addLayout(result_layout1)
-        total_result_layout.addLayout(result_layout2)
-        total_result_layout.addLayout(result_layout3)
-        total_result_layout.addLayout(result_layout4)
-        total_result_layout.addLayout(result_layout5)
-        total_result_layout.addLayout(result_layout6)
-        total_result_layout.addLayout(result_layout7)
-        total_result_layout.addLayout(result_layout8)
-        total_result_layout.addLayout(result_layout9)
-        total_result_layout.addLayout(result_layout10)
+        for i in range(0,9):
+            total_result_layout.addLayout(result_layout[i])
+        
         #initially hide all the buttons
-        self.rbutton1.hide()
-        self.rbutton2.hide()
-        self.rbutton3.hide()
-        self.rbutton4.hide()
-        self.rbutton5.hide()
-        self.rbutton6.hide()
-        self.rbutton7.hide()
-        self.rbutton8.hide()
-        self.rbutton9.hide()
-        self.rbutton10.hide()
-        #hide all the labels initially
+        for i in range(0,9):  
+            self.rbutton[i].hide()
+        
+        #hide all the labels initially 
         self.incorrect_query.hide()
-        self.rlabel1.hide()
-        self.rlabel2.hide()
-        self.rlabel3.hide()
-        self.rlabel4.hide()
-        self.rlabel5.hide()
-        self.rlabel6.hide()
-        self.rlabel7.hide()
-        self.rlabel8.hide()
-        self.rlabel9.hide()
-        self.rlabel10.hide()
+        for i in range(0,9):
+            self.rlabel[i].hide()
+        for i in range(0,9):
+            self.author_label[i].hide()
+        for i in range(0,9):
+            self.genre_label[i].hide()
+        for i in range(0,9):
+            self.rating_label[i].hide()
         #total layout for the box
         total_layout=QVBoxLayout()
         total_layout.addLayout(search_layout)
@@ -220,17 +180,10 @@ class Main_Window(QMainWindow):
     @pyqtSlot()
     def setting_index(self):
         selected_text=self.searchbox.currentText()
-        print(selected_text)
-        print('1111111111')
-        #index=self.searchbox.findText(selected_text,PyQt5.QtCore.Qt.MatchFixedString)
-        #print(index)
         self.searchbox.lineEdit().setText(selected_text)
         self.currenttext=selected_text
 
-        print(self.searchbox.currentText())
-        print('askdfalkdsjhfajdshfljakfhlkajhfljadhslfjkahaldsjkfhaldjfhlad')
-        #if index>0:
-        #    self.searchbox.setCurrentIndex(index)
+        
     @pyqtSlot()
     def on_click(self):
 
@@ -242,27 +195,27 @@ class Main_Window(QMainWindow):
         if not books_result:
             self.incorrect_query.show()
         else:
-            self.rlabel1.show()
-            self.rlabel2.show()
-            self.rlabel3.show()
-            self.rlabel4.show()
-            self.rlabel5.show()
-            self.rlabel6.show()
-            self.rlabel7.show()
-            self.rlabel8.show()
-            self.rlabel9.show()
-            self.rlabel10.show()
-            self.rbutton1.show()
-            self.rbutton2.show()
-            self.rbutton3.show()
-            self.rbutton4.show()
-            self.rbutton5.show()
-            self.rbutton6.show()
-            self.rbutton7.show()
-            self.rbutton8.show()
-            self.rbutton9.show()
-            self.rbutton10.show()
+            self.incorrect_query.hide()
+            for i in range(0,9):
+                rlabel[i].setText(books_result[i].title)
+                author_label[i].setText(books_result[i].author)
+                genre_label[i].setText(books_result[i].genre)
+                rating_label[i].setText(books_result[i].rating)
 
+            for i in range(0,9):
+                self.rlabel[i].show()
+
+            for i in range(0,9):
+                self.rbutton[i].show()
+            
+            for i in range(0,9):
+                self.author_label[i].show()
+            
+            for i in range(0,9):
+                self.genre_label[i].show()
+ 
+            for i in range(0,9):
+                self.rating_label[i].show()
         self.statusBar().showMessage('Search Complete')
 
     @pyqtSlot()
