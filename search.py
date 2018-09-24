@@ -7,6 +7,7 @@ from typing import Tuple
 import math
 import sys
 from preproc import PostingsList,Node
+import numpy
 
 def get_newidf(word,Books):
 
@@ -86,18 +87,20 @@ def search_query(text):
         for value in query_vector:
             value=value/magnitude
 
-    #find top 10 closest using cosine distance
+        query_vector = numpy.asarray(query_vector, dtype = float)
+        #find top 10 closest using cosine distance
         cosine_dist=[]
         index=0
+
         for vector in vectors[1:]:
             temp_dis=1
-            for i in range(len(vector)):
-                temp_dis = temp_dis + vector[i]*query_vector[i]
+            vector = numpy.asarray(vector, dtype = float)
+            temp_dis = temp_dis + numpy.inner(vector,query_vector)
 
             cosine_dist.append((index,temp_dis))
             index=index + 1
 
-            cosine_dist=sorted(cosine_dist,key = lambda x:(-x[1]))
+            cosine_dist=sorted(cosine_dist,key = lambda x:(-x[1],-float(Books[x[0]].rating)))
 
         for i in range(0,11):
             result.append(Books[cosine_dist[i][0]])
